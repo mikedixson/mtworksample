@@ -1,0 +1,35 @@
+version: '3.1'
+
+services:
+
+  wordpress:
+    image: wordpress
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: mtdbuser
+      WORDPRESS_DB_PASSWORD: Fl1bbL3&
+      WORDPRESS_DB_NAME: mtwpdb1
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WP_CACHE', false );
+        define('WP_SITEURL', 'https://mttest.localhost.direct');
+        define('WP_HOME', 'https://mttest.localhost.direct');
+    volumes:
+      - wordpress:/var/www/html
+
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: mtwpdb1
+      MYSQL_USER: mtdbuser
+      MYSQL_PASSWORD: Fl1bbL3&
+      MYSQL_RANDOM_ROOT_PASSWORD: '1'
+    volumes:
+      - db:/var/lib/mysql
+
+volumes:
+  wordpress:
+  db:
